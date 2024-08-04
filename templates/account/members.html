@@ -74,6 +74,10 @@
 										<input type="hidden" name="user_id" value="{{request.user}}">
 
 										{% if profile in user.profile.follows.all %}
+											<button type="submit" class="genric-btn success-border medium main__user-suggestion__follow-btn">Following</button>
+
+										{% else %}	
+											<button  type="submit" class="genric-btn success-border medium main__user-suggestion__follow-btn">Follow</button>
 											<button type="submit" class="genric-btn  primary samll">Following</button>
 
 										{% else %}	
@@ -81,6 +85,7 @@
 
 
 										{% endif %}
+										
 									</form>
 								{% endif %}
 							</div>
