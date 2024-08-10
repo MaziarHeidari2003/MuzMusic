@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+		
+<style>
+    video {
+        width: 100%;
+        height: auto;
+    }
+</style>
+			<!-- start banner Area -->
+			<section class="about-banner relative">
+				<div class="overlay overlay-bg"></div>
+				<div class="container">				
+					<div class="row d-flex align-items-center justify-content-center">
+						<div class="about-content col-lg-12">
+							<h1 class="text-white">
+								About Us(Maziar!)				
+							</h1>	
+						</div>	
+					</div>
+				</div>
+			</section>
+			
+
+			<section class="about-info-area section-gap">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-6 info-left">
+							<img style="width: 90%; height: 90%;" class="img-fluid" src="{% static 'images/maziar.jpg' %}" alt="">
+							
+						</div>
+						<div class="col-lg-6 info-right">
+							<h6>Maziar the Author:</h6>
+							<h1>Its Maziar Heidary Speaking:</h1>
+							<p>
+								I dont't really knpw what to say. Having an about page was the hardest part of this project!
+								To summerize. I'm hardworking and ontime person, so eager to learn and as the big man Steve Jobs said,
+								I'm foolish, I'm crazy
+							</p>
+						</div>
+					</div>
+				</div>	
+			</section>
+
+			{% for maziar in maziars %}
+			<section class="about-info-area section-gap">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-6 info-left">
+							{% if maziar.image_file %}
+
+							<img  class="img-fluid" src="{{maziar.image_file.url}}" alt="">
+							{% endif %}
+							
+							{% if maziar.video_file %}
+							<video style="vertical-align: middle;max-width: 100%;height: auto; border-style: none;" class="img-fluid" controls style="width: 50%; height: 50%;">
+								<source src="{{ maziar.video_file.url }}" type="video/mp4">
+								<source src="{{ maziar.video_file.url }}" type="video/ogg">
+								Your browser does not support embedded video.
+								</video>
+								
+							{% endif %}
+						</div>
+						<div class="col-lg-6 info-right">
+							<h6>Maziar the Author:</h6>
+							<h1>{{maziar.title}}</h1>
+							<p>
+								{{maziar.content}}
+							</p>
+						</div>
+					</div>
+				</div>	
+			</section>
+			{% endfor %}
+			<!-- End about-info Area -->
+			
+			<!-- Start other-issue Area -->
+			<section class="other-issue-area section-gap">
+				<div class="container">
+					<div class="row d-flex justify-content-center">
+						<div class="menu-content pb-70 col-lg-9">
+							<div class="title text-center">
+								<h1 class="mb-10">Who Am I? Computer, Music, Working, Studies, Life...</h1>
+								<p>Not a man to wasts words! Lets see what I've got gere!</p>
+							</div>
+						</div>
+					</div>					
+					<div class="row">
+						<div class="col-lg-3 col-md-6">
+							<div class="single-other-issue">
+								<div class="thumb">
+									<img class="img-fluid" style="width: 245; height: 155px; object-fit: cover; " src="{% static 'images/amir_darabi.jpg' %}" alt="">					
+								</div>
+								<a href="{% url 'website:detailed_about' cat_name='music'  %}">
+									<h4>Music</h4>
+								</a>
+								<p>
+									Well I'm really into music and believe it or not if I could feel safe living a musician life, I would've put all of my effort only in this feild.
+								</p>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6">
+							<div class="single-other-issue">
+								<div class="thumb">
+									<img style="height: 80%; object-fit: cover;" class="img-fluid" src="{% static 'images/_4th_cover.png' %}" alt="">					
+								</div>
+								<a href="{% url 'website:detailed_about' cat_name='programming' %}">
+									<h4>Programming and Projects</h4>
+								</a>
+								<p>
+									I'm really into Django and python these days. So eager to learn looking for a good path to grow! 
+								</p>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6">
+							<div class="single-other-issue">
+								<div class="thumb">
+									<img class="img-fluid" src="{% static 'images/life.jpg' %}" alt="">					
+								</div>
+								<a href="{% url 'website:detailed_about' cat_name='life' %}">
+									<h4>Life is not Beautiful!</h4>
+								</a>
+								<p>
+									It's a meaningless life no matter you are Maziar or Steve Jobs. So what the heck am I doning here palnning and learning skills? For what?!
+								</p>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6">
+							<div class="single-other-issue">
+								<div class="thumb">
+									<img class="img-fluid" src="{% static 'images/daneshgah.jpg' %}" alt="">					
+								</div>
+								<a href="{% url 'website:detailed_about' cat_name='studies' %}">
+									<h4>University</h4>
+								</a>
+								<p>
+									I'm studying Computer Engineering at Shiraz University of Technology, I don't really have good memories of studying but again Life goes on!
+								</p>
+							</div>
+						</div>																		
+					</div>
+				</div>	
+			</section>
+			<!-- End other-issue Area -->
+
+		{% endblock %}

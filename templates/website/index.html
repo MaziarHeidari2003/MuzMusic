@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+		<!-- start banner Area -->
+		<section class="banner-area relative">
+			<div class="overlay overlay-bg"></div>				
+			<div class="container">
+				<div class="row fullscreen align-items-center justify-content-between">
+					<div class="col-lg-6 col-md-6 banner-left">
+						<h1 class="text-white">Welcome to MuzMusic</h1>
+						<p class="text-white">
+							You into music? Or looking for some cool frends? Or you you wanna get to know Maziar?! Come on sign in and let us know you!
+						</p>
+						
+					</div>
+					
+				</div>
+			</div>					
+		</section>
+		<!-- End banner Area -->
+
+	
+
+		<!-- Start other-issue Area -->
+		<section class="other-issue-area section-gap">
+			<div class="container">
+				<div class="row d-flex justify-content-center">
+					<div class="menu-content pb-70 col-lg-9">
+						<div class="title text-center">
+							<h1 class="mb-10">Who Am I? Computer, Music, Working, Studies, Life...</h1>
+							<p>Not a man to waste words! Let's see what I've got here!</p>
+						</div>
+					</div>
+				</div>					
+				<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="single-other-issue">
+							<div class="thumb">
+								<img class="img-fluid" style="width: 245; height: 155px; object-fit: cover; " src="{% static 'images/amir_darabi.jpg' %}" alt="">					
+							</div>
+							<a href="{% url 'website:detailed_about' cat_name='music'  %}">
+								<h4>Music</h4>
+							</a>
+							<p>
+								Well I'm really into music and believe it or not if I could feel safe living a musician life, I would've put all of my effort only in this field.
+							</p>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="single-other-issue">
+							<div class="thumb">
+								<img style="height: 80%; object-fit: cover;" class="img-fluid" src="{% static 'images/_4th_cover.png' %}" alt="">					
+							</div>
+							<a href="{% url 'website:detailed_about' cat_name='programming' %}">
+								<h4>Programming and Projects</h4>
+							</a>
+							<p>
+								I'm really into Django and Python these days. So eager to learn looking for a good path to grow! 
+							</p>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="single-other-issue">
+							<div class="thumb">
+								<img class="img-fluid" src="{% static 'images/life.jpg' %}" alt="">					
+							</div>
+							<a href="{% url 'website:detailed_about' cat_name='life' %}">
+								<h4>Life is not Beautiful!</h4>
+							</a>
+							<p>
+								It's a meaningless life no matter you are Maziar or Steve Jobs. So what the heck am I doning here palnning and learning skills? For what?!
+							</p>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="single-other-issue">
+							<div class="thumb">
+								<img class="img-fluid" src="{% static 'images/daneshgah.jpg' %}" alt="">					
+							</div>
+							<a href="{% url 'website:detailed_about' cat_name='studies' %}">
+								<h4>University</h4>
+							</a>
+							<p>
+								I'm studying Computer Engineering at Shiraz University of Technology, I don't really have good memories of studying but again Life goes on!
+							</p>
+						</div>
+					</div>																		
+				</div>
+			</div>	
+		</section>
+		<!-- End other-issue Area -->
+		
+
+	
+		<!-- Start home-about Area -->
+		<section class="home-about-area">
+			<div class="container-fluid">
+				<div class="row align-items-center justify-content-end">
+					<div class="col-lg-6 col-md-12 home-about-left">
+						<h1>
+							You don't still Know what you're doing here? <br>
+							Feel free to talk to me! <br>
+							We‘ll keep in touch darling!
+						</h1>
+						<p>
+							There two main reasons for this website.<br>First, well this website is mainly about me(Maziar!) and i want to share and annonce the fields I'm interested in and how good I am in those fields. <br> 
+							 Second, to gather the music lovers into a nice and original musical environment where everyone can share their thoughts, feelings and find new freinds! 
+							
+						</p>
+						<a href="{% url 'website:contact' %}" class="primary-btn text-uppercase">Lets Contact!</a>
+					</div>
+					<div class="col-lg-6 col-md-12 home-about-right no-padding">
+						<img  class="img-fluid" src="{% static 'images/aria_karimi.jpg' %}" alt="">
+					</div>
+				</div>
+			</div>	
+		</section>
+		<!-- End home-about Area -->
+		
+
+		
+<section class="recent-blog-area section-gap" >
+    <div class="container" >
+        <div class="row d-flex justify-content-center" style="margin-top:0px ;">
+            <div class="menu-content pb-60 col-lg-9">
+                <div class="title text-center">
+                    <h1 class="mb-10">Lets get to Know our Cool members!</h1>
+                    <p>By following our friends you would get notified whenever they have a new post</p>
+                </div>
+            </div>
+        </div>							
+        <div class="row">
+            <div class="active-recent-blog-carusel">
+                {% for profile in random_profiles %}
+                <div class="single-recent-blog-post item">
+                    <div class="thumb">
+                        <img class="img-fluid" style="border-radius: 50%; width: 140px; height: 140px; object-fit: cover;" src="{{profile.profile_image.url}}" alt="">
+                    </div>
+                    <div class="details">
+                        <div class="tags">
+                            <ul>
+                                <li>
+									{% if request.user.is_authenticated %}
+										<form method="post" action="">
+												{% csrf_token %}
+												<input type="hidden" name="target_profile_id" value="{{ profile.id }}">
+													{% if profile in request.user.profile.follows.all %}
+													<button class="main__user-suggestion__follow-btn" type="submit">Following</button>
+												{% else %}
+												<button class="main__user-suggestion__follow-btn" type="submit">Follow</button>
+												{% endif %}
+										</form>
+										<li>
+											<a href="{% url 'blog:blog_author' profile.user.username %}">View the Posts</a>
+										</li>	
+									{% else %}
+									<a href="{% url 'login' %}" >Follow </a>	
+                                </li>
+                                <li>
+                                    <a href="{% url 'blog:blog_author' profile.user.username %}">View the Posts</a>
+                                </li>	
+								{% endif %}										
+                            </ul>
+                        </div>
+                        <a href="{% url 'blog:blog_author' profile.user.username %}"><h4 class="title">{{profile.user.username}}</h4></a>
+                        <p>
+                            {{profile.bio|truncatewords:17}}
+                        </p>
+                    </div>	
+                </div>
+                {% endfor %}
+                                                    
+
+            </div>
+        </div>
+    </div>	
+</section>
+
+
+		
+	
+	{% endblock %}	
+
+		

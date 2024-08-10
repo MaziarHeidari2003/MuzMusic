@@ -1,0 +1,142 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load blog_custom_tags %}
+{% block content %}
+			<!-- start banner Area -->
+			<section class="banner-area relative blog-home-banner" id="home">	
+				<div class="overlay overlay-bg"></div>
+				<div class="container">				
+					<div class="row d-flex align-items-center justify-content-center">
+						<div class="about-content blog-header-content col-lg-12">
+							<h1 class="text-white">
+								Let's Checkout some Posts!		
+							</h1>	
+							<p class="text-white">
+									Lets forget the whole world and keep in touch with a backgound of light Music!
+							</p>							
+						</div>	
+					</div>
+				</div>
+			</section>
+			<!-- End banner Area -->				  
+
+
+			<section class="top-category-widget-area pt-90 pb-90 ">
+				<!-- this is left for the style of the page -->
+			</section>
+
+
+
+
+
+		
+			<!-- Start post-content Area -->
+			<section class="post-content-area">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 posts-list">
+						{% for post in posts %}
+							<div class="single-post row">
+								<div class="col-lg-3  col-md-3 meta-details">
+									<ul class="tags">
+										{% for cat in post.category.all %}
+										<li><a href="{% url 'blog:blog_category' cat.slug %}">
+											{{cat.title}}
+											{% if not forloop.last %}
+											,
+											{% endif %}	
+										</a></li>
+										{% endfor %}
+									</ul>
+									<div class="user-details row">
+										<p class="user-name col-lg-12 col-md-12 col-6"><a href="{% url 'blog:blog_author' post.post_author %}">{{post.post_author.username}}</a> <span class="lnr lnr-user"></span></p>
+										<p class="date col-lg-12 col-md-12 col-6"><a href="{{post.get_absolute_url}}">{{post.created|timesince}}</a> <span class="lnr lnr-calendar-full"></span></p>
+										<p class="view col-lg-12 col-md-12 col-6"><a href="{{post.get_absolute_url}}">{{post.counted_views}}</a> <span class="lnr lnr-eye"></span></p>
+										<p class="comments col-lg-12 col-md-12 col-6"><a href="{{post.get_absolute_url}}">{{post.comment_set.count}}</a> <span class="lnr lnr-bubble"></span></p>						
+									</div>
+								</div>
+								<div class="col-lg-9 col-md-9 ">
+									<div class="feature-img">
+										<img class="img-fluid" src="{{post.image_file.url}}" alt="">
+									</div>
+									<a class="posts-title" href="{{post.get_absolute_url}}"><h3>{{post.title}}</h3></a>
+									<p class="excert">
+										{{post.content|truncatewords:21}}
+									</p>
+									<a href="{% url  'blog:blog_author' post.post_author %}" class="primary-btn">More form {{post.post_author.username}}</a>
+								</div>
+							</div>
+						{% endfor %}
+						
+
+
+
+
+
+
+
+
+
+
+
+						{% categories_list  %}
+
+						
+					{% if is_paginated %}			
+					<nav class="blog-pagination justify-content-center d-flex">
+						<ul class="pagination">
+							{% if page_obj.has_previous %}
+							<li class="page-item">
+								<a href="?page={{page_obj.previous_page_number}}" class="page-link" aria-label="Previous">
+									<span aria-hidden="true">
+										<span class="lnr lnr-chevron-left"></span>
+									</span>
+								</a>
+							</li>
+							{% endif %}
+	
+							{% for i in page_obj.paginator.page_range %}
+							<li class="page-item"><a href="?page={{i}}" class="page-link">{{i}}</a></li>
+							{% endfor %}
+	
+							{% if page_obj.has_next %}
+							<li class="page-item">
+								<a href="?page={{page_obj.next_page_number}}" class="page-link" aria-label="Next">
+									<span aria-hidden="true">
+										<span class="lnr lnr-chevron-right"></span>
+									</span>
+								</a>
+							</li>
+							{% endif %}
+						</ul>
+					</nav>
+					{% endif %}
+
+
+
+
+
+
+						</div>
+						<div class="col-lg-4 sidebar-widgets">
+							<div class="widget-wrap">
+								<div class="single-sidebar-widget search-widget">
+									<form class="search-form" action="">
+			                            <input placeholder="Search Posts" name="search" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'" >
+			                            <button type="submit"><i class="fa fa-search"></i></button>
+			                        </form>
+								</div>
+								
+								{% popular_posts %}
+								{% include 'blog/ads.html' %}
+								{% post_category %}
+													
+							</div>
+						</div>
+					</div>
+				</div>	
+			</section>
+			<!-- End post-content Area -->
+			
+		{% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load blog_custom_tags %}
+
+{% block content %}
+
+			<!-- start banner Area -->
+			<section class="relative about-banner" id="home">	
+				<div class="overlay overlay-bg"></div>
+				<div class="container">				
+					<div class="row d-flex align-items-center justify-content-center">
+						<div class="about-content col-lg-12">
+							{% if request.user.is_authenticated %}
+							<h2 class="text-white">
+								You could make some firends dear {{user.first_name}}!		
+							</h2>	
+							{% else %}
+							<h2 class="text-white">
+								Not a BlogMember Yet!?		
+							</h2>
+					
+							<p class="text-white link-nav"><a  href="{% url 'login' %}"> Login/Signup </a>  <span class="lnr lnr-arrow-right"></span>  <a onclick="scrollToForm()"> Write your Own posts</a></p>
+
+							{% endif %}
+							<p class="text-white">
+								<strong>Follow the firends to get notified if they have a new post </strong> 
+						</p>		
+						
+							
+						</div>	
+					</div>
+				</div>
+			</section>
+			<!-- End banner Area -->	
+
+			<!-- Start Sample Area -->
+			<section class="sample-text-area">
+				<div class="container">
+					<h3 class="text-heading">So what is this page about?</h3>
+					<p style="font-size:16px ;" class="sample-text">
+						
+						Here you can see our blog members profiles and get to know them even more, you can check their own posts and find the ones with the same taste.
+						You could even get acces to thier social media profile if they provide links.
+					</p>
+
+						<p>
+							<strong>You know what, Birds of a Feather Fly Together</strong> 
+						</p>
+						<p> <strong>
+							Follow the firends to get notified if they have a new post	
+						</strong></p>
+
+					
+				</div>
+			</section>
+			<!-- End Sample Area -->
+		
+			<!-- Start Align Area -->
+			 <section><div class="whole-wrap">
+				<div class="container">
+
+					{% for profile in profiles %}
+						<div class="section-top-border">
+							<h3 class="mb-30"><a style="color: black;" href="{% url 'blog:blog_author' profile.user.username %}">{{profile.user.username}}</a></h3>
+							<div class="row">
+								<div class="col-md-3">
+									<a href="{% url 'blog:blog_author' profile.user.username %}">
+											<img  src="{{profile.profile_image.url}}" alt="" class="img-fluid">
+								
+									</a>
+								</div>
+								<div class="col-md-9 mt-sm-20 left-align-p">
+									<p>{{profile.bio}}</p>
+								</div>
+							
+						
+
+								{% if not request.user.id == profile.id %}
+								<div class="button-group-area mt-10">
+									<form method="POST" action="{% url 'blog:follow' %}">
+										{% csrf_token %}
+										<input type="hidden" name="target_profile" value="{{profile.user}}">
+										<input type="hidden" name="user_id" value="{{request.user}}">
+
+										{% if profile in user.profile.follows.all %}
+											<button type="submit" class="genric-btn  primary samll">Following</button>
+
+										{% else %}	
+											<button  type="submit" class="genric-btn  primary samll">Follow</button>
+
+
+										{% endif %}
+										
+									</form>
+								{% endif %}
+							</div>
+
+						</div>
+					{% endfor %}
+
+					<nav class="blog-pagination justify-content-center d-flex">
+						<ul class="pagination">
+							{% if users.has_previous %}
+							<li class="page-item">
+								<a href="?page={{posts.previous_page_number}}" class="page-link" aria-label="Previous">
+									<span aria-hidden="true">
+										<span class="lnr lnr-chevron-left"></span>
+									</span>
+								</a>
+							</li>
+							{% endif %}
+	
+							{% for i in users.paginator.page_range %}
+							<li class="page-item"><a href="?page={{i}}" class="page-link">{{i}}</a></li>
+							{% endfor %}
+	
+							{% if users.has_next %}
+							<li class="page-item">
+								<a href="?page={{users.next_page_number}}" class="page-link" aria-label="Next">
+									<span aria-hidden="true">
+										<span class="lnr lnr-chevron-right"></span>
+									</span>
+								</a>
+							</li>
+							{% endif %}
+						</ul>
+					</nav>
+		
+	
+				
+				</div>
+			</div>
+
+			</div></section>
+			
+			<!-- End Align Area -->
+
+		
+      {% endblock %}

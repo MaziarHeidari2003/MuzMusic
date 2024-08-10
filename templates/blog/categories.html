@@ -1,0 +1,42 @@
+	
+{% load static %}
+
+<section class="recent-blog-area section-gap" >
+    <div class="container" >
+        <div class="row d-flex justify-content-center" style="margin-top:0px ;">
+            <div class="menu-content pb-60 col-lg-9">
+                <div class="title text-center">
+                    <h1 class="mb-10">Find Posts based on your Taste!</h1>
+                    <p>Come on just click on your fovorite category</p>
+                </div>
+            </div>
+        </div>							
+        <div class="row">
+            <div class="active-recent-blog-carusel">
+                {% for category in categories %}
+                <div class="single-recent-blog-post item">
+                    <div class="thumb">
+                        <img class="img-fluid" style=" width: 160px; height: 160px; object-fit: cover;" src="{{category.category_image.url}}" alt="">
+                    </div>
+                    <div class="details">
+                        <div class="tags">
+                            <ul>
+                                
+                                <li>
+                                    <a href="{% url 'blog:blog_category' category %}">{{category.title}}</a>
+                                </li>	
+                            </ul>
+                        </div>
+                        <a href=""><h4 class="title">{{profile.user.username}}</h4></a>
+                        <p>
+                            {{profile.bio|slice:":40"}}
+                        </p>
+                    </div>	
+                </div>
+                {% endfor %}
+                                                    
+
+            </div>
+        </div>
+    </div>	
+</section>

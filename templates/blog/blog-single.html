@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load blog_custom_tags %}
+{% block content %}
+		  
+			<!-- start banner Area -->
+			<section class="relative about-banner">	
+				<div class="overlay overlay-bg"></div>
+				<div class="container">				
+					<div class="row d-flex align-items-center justify-content-center">
+						<div class="about-content col-lg-12">
+							<h1 class="text-white">
+								{{post.title}}				
+							</h1>	
+						</div>	
+					</div>
+				</div>
+			</section>
+			<!-- End banner Area -->					  
+			
+			<!-- Start post-content Area -->
+			<section class="post-content-area single-post-area">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 posts-list">
+							<div class="single-post row">
+								<div class="col-lg-12">
+									<div class="feature-img">
+										<img class="img-fluid" src="{{post.image_file.url}}" alt="">
+									</div>									
+								</div>
+								<div class="col-lg-3  col-md-3 meta-details">
+									<ul class="tags">
+										{% for cat in post.category.all %}
+										<li><a href="#">
+											{{cat.title}}
+											{% if not forloop.last %}
+											,
+											{% endif %}	
+										</a></li>
+										{% endfor %}
+									</ul>
+									<div class="user-details row">
+										<p class="user-name col-lg-12 col-md-12 col-6"><a href="{% url 'blog:blog_author' post.post_author %}">{{post.post_author.username}}</a> <span class="lnr lnr-user"></span></p>
+										<p class="date col-lg-12 col-md-12 col-6"><a href="#">{{post.created|timesince}}</a> <span class="lnr lnr-calendar-full"></span></p>
+										<p class="view col-lg-12 col-md-12 col-6"><a href="#">{{post.counted_views}}</a> <span class="lnr lnr-eye"></span></p>
+										<p class="comments col-lg-12 col-md-12 col-6"><a href="#">{{post.comment_set.count}}</a> <span class="lnr lnr-bubble"></span></p>
+
+							
+										<ul class="social-links col-lg-12 col-md-12 col-6">
+											<!-- <li><a href="#"><i class="fa fa-telegram"></i></a></li>
+											<li><a href="#"><i class="fa fa-linkedin"></i></a></li> -->
+											<!-- <li><a href="#"><i class="fa fa-twitter"></i></a></li> -->
+											<!-- <li><a href="#"><i class="fa fa-instagram"></i></a></li> -->
+										</ul>																				
+									</div>
+								</div>
+								<div class="col-lg-9 col-md-9">
+									<h3 class="mt-20 mb-20">{{post.title}}</h3>
+									<p class="excert">
+										{{post.content}}
+									</p>
+									
+								</div>
+								<div class="col-lg-12">
+									<form action="{% url 'blog:like_post' post.id %}" method="POST" >
+										{% csrf_token %}
+										{% if liked %}
+											<button  type="submit" class="btn btn-secondary btn-sm" >
+											  Unlike</button> - {{total_likes}} Likes
+										  {% else %}
+											<button  type="submit"  class="btn btn-primary btn-sm" >
+											  Like</button> - {{total_likes}} Likes
+										  {% endif %}
+									</form>
+									<div class="quotes">
+										{% if post.audio_file %}
+											<audio controls>
+											<source src="{{ post.audio_file.url }}" type="audio/mp3">
+											Your browser does not support the audio element.
+											</audio>
+										{% endif %}
+										
+									</div>
+									<!-- <div class="row mt-30 mb-30">
+										<div class="col-6">
+											<img class="img-fluid" src="{% static 'images/blog/post-img1.jpg' %}" alt="">
+										</div>
+										<div class="col-6">
+											<img class="img-fluid" src="{% static 'images/blog/post-img2.jpg' %}" alt="">
+										</div>	
+										<div class="col-lg-12 mt-30">
+											<p>
+												MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower.
+											</p>
+											<p>
+												MCSE boot camps have its supporters and its detractors. Some people do not understand why you should have to spend money on boot camp when you can get the MCSE study materials yourself at a fraction of the camp price. However, who has the willpower.
+											</p>											
+										</div>									
+									</div> -->
+								</div>
+							</div>
+							<!-- <div class="navigation-area">
+								<div class="row">
+									<div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+										<div class="thumb">
+											<a href="#"><img class="img-fluid" src="{% static 'images/blog/prev.jpg' %}" alt=""></a>
+										</div>
+										<div class="arrow">
+											<a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+										</div>
+										<div class="detials">
+											<p>Prev Post</p>
+											<a href="#"><h4>Space The Final Frontier</h4></a>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+										<div class="detials">
+											<p>Next Post</p>
+											<a href="#"><h4>Telescopes 101</h4></a>
+										</div>
+										<div class="arrow">
+											<a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
+										</div>
+										<div class="thumb">
+											<a href="#"><img class="img-fluid" src="{% static 'images/blog/next.jpg' %}" alt=""></a>
+										</div>										
+									</div>									
+								</div>
+							</div> -->
+
+
+
+							
+							<div class="comments-area">
+								<h4>{{comments.count}} Comments</h4>
+								<div class="comment-list">
+							{% for comment in comments %}		
+                                    <div class="single-comment justify-content-between d-flex">
+                                        <div class="user justify-content-between d-flex">
+                                            <div class="thumb">
+                                                <img 
+												style="border-radius: 50%; width: 81px; height: 81px; object-fit: cover;"
+												 src="{{comment.comment_author.profile.profile_image.url}}" alt="">
+                                            </div>
+                                            <div class="desc">
+                                                <h5><a href="{% url 'blog:blog_author' comment.comment_author.username %}">{{comment.comment_author.first_name}}</a></h5>
+                                                <p class="date">{{comment.created|timesince}} </p>
+                                                <p class="comment">
+                                                    {{comment.content}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="reply-btn">
+                                               <a class="btn-reply text-uppercase">reply</a> 
+                                        </div>
+                                    </div>
+							{% endfor %}		
+                                </div>	
+							
+								                                       				
+							</div>
+
+
+
+							<div class="comment-form">
+								<h4>Leave a Comment</h4>
+								<form method="POST" action="">
+									{% csrf_token %}
+									<input type="hidden" name="post" value="{{post.id}}">
+									<input type="hidden" name="comment_author" value="{{request.user.id}}">
+									<div class="form-group form-inline">
+									  <!-- <div class="form-group col-lg-6 col-md-12 name">
+									    <input type="text" class="form-control" id="name" placeholder="Enter Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+									  </div> -->
+									  <!-- <div class="form-group col-lg-6 col-md-12 email">
+									    <input type="email" class="form-control" id="email" placeholder="Enter email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email address'">
+									  </div>										 -->
+									</div>
+									<!-- <div class="form-group">
+										<input type="text" class="form-control" id="subject" placeholder="Subject" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Subject'">
+									</div> -->
+									<div class="form-group">
+										{{form.content}}
+										<!-- <textarea class="form-control mb-10" rows="5" name="message" placeholder="Messege" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Messege'" required=""></textarea> -->
+									</div>
+									<button  type="submit">Post Comment</button>
+									<!-- <a href="#" class="primary-btn text-uppercase">Post Comment</a>	 -->
+								</form>
+							</div>
+						</div>
+						<div class="col-lg-4 sidebar-widgets">
+							<div class="widget-wrap">
+								<div class="single-sidebar-widget search-widget">
+									<form class="search-form" action="#">
+			                            <input placeholder="Search Posts" name="search" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Posts'" >
+			                            <button type="submit"><i class="fa fa-search"></i></button>
+			                        </form>
+								</div>
+
+								
+								{% include 'account/writer-info.html' %}
+
+
+								{% popular_posts %}
+								{% post_category %}
+								{% include 'blog/ads.html' %}
+
+
+							
+						
+														
+							</div>
+						</div>
+					</div>
+				</div>	
+			</section>
+			<!-- End post-content Area -->
+			
+		{% endblock %}

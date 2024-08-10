@@ -1,0 +1,101 @@
+{% extends 'account/account_base.html' %}
+{% load static %}
+
+{% block content %}
+<body style="background-color: #999999;">
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="login100-more"></div>
+			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
+
+
+				<form action="{% url 'blog:post_create' %}" method="POST" enctype="multipart/form-data" class="login100-form validate-form">
+					{% csrf_token %}
+
+                    <input type="hidden" name="post_author" value="{{request.user.id}}">
+					<span class="login100-form-title p-b-59">
+						Create Post
+					</span>
+					<!--
+					<div class="wrap-input100 validate-input" >
+						<span class="label-input100">First Name</span>
+							{{form.first_name}}
+						<span class="focus-input100"></span>
+						</div>
+						<div class="wrap-input100 validate-input" >
+							<span class="label-input100">Last Name</span>
+								{{form.last_name}}
+							<span class="focus-input100"></span>
+							</div>
+						
+						<div class="wrap-input100 validate-input" >
+							<span class="label-input100">You could choose a profile picture</span>
+							{{form.image}}
+							<span class="focus-input100"></span>
+						</div>
+
+						-->
+						
+					<div class="wrap-input100 validate-input" data-validate="Username is required">
+						<span class="label-input100">Title</span>
+						{{form.title}}
+						<span class="focus-input100"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input" >
+                        <span class="label-input100">Category</span>
+                            {{form.category}}
+                        <span class="focus-input100"></span>
+                        </div>
+			
+				
+					
+					<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+						<span class="label-input100">Content</span>
+						{{form.content}}
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+						<span class="label-input100">Image</span>
+						{{form.image_file}}
+						<span class="focus-input100"></span>
+					</div>
+
+                    
+					<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+						<span class="label-input100">Audio</span>
+						{{form.audio_file}}
+						<span class="focus-input100"></span>
+					</div>
+
+
+
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button type="submit" class="login100-form-btn">
+								Publish
+							</button>
+						</div>
+						<div class="alert alert-light" role="alert">
+							{% if messages %}
+							<ul class="messages">
+								{% for message in messages %}
+								<li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+									<p>{{ message }}</p>
+									</li>
+									{% endfor %}
+							</ul>
+							{% endif %}
+						</div>
+					</div>
+
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+	{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'account/account_base.html' %}
+{% load static %}
+
+{% block content %}
+<body style="background-color: #999999;">
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="login100-more"></div>
+			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
+
+
+				<form action="{% url 'bio' request.user.username %}" method="post" enctype="multipart/form-data" class="login100-form validate-form">
+					{% csrf_token %}
+
+
+					<span class="login100-form-title p-b-59">
+						Compelete Profile
+					</span>
+                    
+               
+				
+					<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+						<span class="label-input100">Bio</span>
+						{{form.bio}}
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+						<span class="label-input100">Profile Image</span>
+						{{form.profile_image}}
+						<span class="focus-input100"></span>
+					</div>
+
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button type="submit" class="login100-form-btn">
+								Compelete Profile
+							</button>
+						</div>
+                    
+                       
+                        
+						<div class="alert alert-light" role="alert">
+							{% if messages %}
+							<ul class="messages">
+								{% for message in messages %}
+								<li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+									<p>{{ message }}</p>
+									</li>
+									{% endfor %}
+							</ul>
+							{% endif %}
+						</div>
+					</div>
+
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+	{% endblock %}

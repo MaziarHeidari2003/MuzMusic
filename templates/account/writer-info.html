@@ -1,0 +1,35 @@
+{% load static %}
+
+<div class="single-sidebar-widget user-info-widget">
+    <img style="border-radius:  50%;" src="{{profile.profile_image.url}}" alt="">
+    <a href="#"><h4>{{profile.user}}</h4></a>
+    
+    <div class="button-group-area mt-10">
+        {% if not request.user.username == profile.user.username %}
+        <form method="POST" action="{% url 'blog:follow' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="target_profile" value="{{profile.user}}">
+                            <input type="hidden" name="user_id" value="{{request.user}}">
+
+                            {% if profile in request.user.profile.follows.all %}
+                                <button type="submit" class="genric-btn  primary samll"">Following</button>
+
+                            {% else %}	
+                                <button  type="submit" class="genric-btn  primary samll">Follow</button>
+
+
+                            {% endif %}
+                        </form>
+        {% endif %}            
+    </div>
+    <br> <!--add by me to have to buttom-->
+    <!-- <ul class="social-links">
+        <li><a href="{{profile.telegram_id}}"><i class="fa fa-telegram"></i></a></li>
+        <li><a href="{{profile.linkedin_id_id}}"><i class="fa fa-linkedin"></i></a></li>
+         <li><a href="#"><i class="fa fa-github"></i></a></li> 
+        <li><a href="{{profile.instagram_id}}"><i class="fa fa-instagram"></i></a></li>
+    </ul> -->
+    <p>
+        {{profile.bio}}
+    </p>
+</div>

@@ -1,0 +1,21 @@
+{% load static %}
+
+
+<div class="single-sidebar-widget popular-post-widget">
+    <h4 class="popular-title">Popular Posts</h4>
+    <div class="popular-post-list">
+        {% for post in posts %}
+
+            <div class="single-post-list d-flex flex-row align-items-center">
+                <div class="thumb">
+                    <img class="img-fluid" src="{{post.image_file.url}}" alt="">
+                </div>
+                <div class="details">
+                    <a href="{{post.get_absolute_url}}"><h6>{{post.title}}</h6></a>
+                    <p>{{post.created|timesince}}</p>
+                </div>
+            </div>
+        {% endfor %}
+      								
+    </div>
+</div>

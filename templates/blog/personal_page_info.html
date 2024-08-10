@@ -1,0 +1,94 @@
+{% load static %}
+
+
+
+
+<div class="single-sidebar-widget popular-post-widget">
+    <h4 class="popular-title">Following</h4>
+    <div class="popular-post-list">
+        <div class="container"> <!--i added this div to make the appearance of the images more in the center (mine)-->
+
+        {% for person in following %}
+            <div class="single-post-list d-flex flex-row align-items-center">
+                <div class="thumb" >
+                    <img class="img-fluid" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover" src="{{person.profile_image.url}}" alt="">
+                </div>
+                <div class="details">
+                    <a href="{% url 'blog:blog_author' person.user.username %}"><h6>{{person.user.username}}</h6></a>
+ 
+                    <div class="button-group-area mt-10">
+                        {% if not request.user.username == person.user.username %}
+
+                        <form method="POST" action="{% url 'blog:follow' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="target_profile" value="{{person.user}}">
+                                            <input type="hidden" name="user_id" value="{{request.user}}">
+
+                                            {% if person in request.user.profile.follows.all %}
+                                                <button type="submit" class="genric-btn  primary samll"">Following</button>
+
+                                            {% else %}	
+                                                <button  type="submit" class="genric-btn  primary samll">Follow</button>
+
+
+                                            {% endif %}
+                                        </form>
+                        {% endif %}            
+                    </div>
+
+
+
+
+                </div>
+            
+            </div>
+        {% endfor %}
+    </div>
+                                      
+    </div>
+</div>
+
+<div class="single-sidebar-widget popular-post-widget">
+    <h4 class="popular-title">Followed By</h4>
+    <div class="popular-post-list">
+        <div class="container"> <!--i added this div to make the appearance of the images more in the center (mine)-->
+
+        {% for person1 in followed %}
+            <div class="single-post-list d-flex flex-row align-items-center">
+                <div class="thumb" >
+                    <img class="img-fluid" style="border-radius: 50%; width: 100px; height: 100px; object-fit: cover" src="{{person1.profile_image.url}}" alt="">
+                </div>
+                <div class="details">
+                    <a href=""><h6>{{person1.user.username}}</h6></a>
+                   
+  
+                    <div class="button-group-area mt-10">
+                        {% if not request.user.username == person1.user.username %}
+                        <form method="POST" action="{% url 'blog:follow' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="target_profile" value="{{person1.user}}">
+                            <input type="hidden" name="user_id" value="{{request.user}}">
+
+                            {% if person1 in request.user.profile.follows.all %}
+                                <button type="submit" class="genric-btn  primary samll"">Following</button>
+
+                            {% else %}	
+                                <button  type="submit" class="genric-btn  primary samll">Follow</button>
+
+
+                            {% endif %}
+                        </form>
+                        {% endif %}
+                    </div>
+
+
+
+
+                </div>
+            
+            </div>
+        {% endfor %}
+    </div>
+                                      
+    </div>
+</div>		

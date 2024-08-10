@@ -1,0 +1,18 @@
+{
+    "platform": "django",
+    "django": {
+      "pythonVersion": "3.12",
+      "timezone":"Asia/Tehran"
+    },
+    "app":"muzmusic",
+    "disks":[
+      {
+        "name":"static",
+        "mountTo":"static"
+      },      
+      {
+        "name":"media",
+        "mountTo":"media"
+      }
+    ]
+  }

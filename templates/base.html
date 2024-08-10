@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="no.js' %}">
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'images/fav.png' %}">
+    <!-- Author Meta -->
+    <meta name="author" content="colorlib">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>MuzMusic</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
+        <!--
+        CSS
+        ============================================= -->
+        <link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
+        <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+        <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">				
+        <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">							
+        <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">				
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    </head>
+    <body>	
+        <header id="header">
+            <div class="header-top">
+                <div class="container">
+                  <div class="row align-items-center">
+                      <div class="col-lg-6 col-sm-6 col-6 header-top-left">
+						{% if request.user.is_authenticated %}
+                          <ul>
+                              <li><a href="{% url 'blog:blog_author' user.username %}">Logged in as {{request.user.username}}</a></li>
+                              <li><a href="{% url 'logout' %}">Logout</a></li>
+                          </ul>		
+						  {% else %}	
+						  <ul>
+							<li><a href="{% url 'login' %}">Login</a></li>
+							<li><a href="{% url 'register' %}">Register</a></li>
+						</ul>		
+						  {% endif %}
+                      </div>
+                      <div class="col-lg-6 col-sm-6 col-6 header-top-right">
+                        <div class="header-social">
+                            <!-- <a href="https:/linkedin.com"><i class="fa fa-linkedin"></i></a> -->
+                            <!-- <a href="https://web.telegram.org"><i class="fa fa-telegram"></i></a> -->
+                            <!-- <a href="https:/instagram.com"><i class="fa fa-instagram"></i></a> -->
+                        </div>
+                      </div>
+                  </div>			  					
+                </div>
+            </div>
+            <div class="container main-menu">
+                <div class="row align-items-center justify-content-between d-flex">
+                  <div id="logo">
+					{% if request.user.is_authenticated %}
+                    <a href="{% url 'blog:blog_author' user.username %}"><img src="{{request.user.profile.profile_image.url}}" alt="" title="" /></a>
+					{% else %}
+					<a href="{% url 'login' %}"><img src="{% static 'images/default_profile.png' %}" alt="" title="" /></a>
+					{% endif %}
+
+				</div>
+				
+				
+                  <nav id="nav-menu-container">
+					
+                    <ul class="nav-menu">
+						{% if request.user.is_authenticated %}
+						<li><a href="{% url 'blog:post_create' %}">Create Post</a>	
+						</li>		 
+						<li class="menu-has-children"><a href="">My Profile </a>
+							<ul>
+							  <li><a href="{% url  'blog:blog_author' request.user.username %}">My Page</a></li>
+							  <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+							  <li><a href="{% url 'reset_password' %}">Reset Password</a></li>
+
+							</ul>
+						  </li>	
+						{% endif %}  	
+						<li><a href="{% url 'members' %}">Friends(You!)</a>	
+						</li>					      
+                      <li><a href="{% url 'website:index' %}">Home</a></li>
+                      <li><a href="{% url 'website:about' %}">About</a></li>
+                      <li><a href="{% url 'blog:blog_home' %}">Blog</a>
+                        
+                      </li>	
+                        					          		          
+                      <li><a href="{% url 'website:contact' %}">Contact</a></li>
+                    </ul>
+                  </nav><!-- #nav-menu-container -->					      		  
+                </div>
+            </div>
+			
+        </header><!-- #header -->
+        {% block content %}
+
+        
+        {% endblock %}
+
+
+
+
+
+
+
+        <!-- start footer Area -->		
+			<footer class="footer-area section-gap">
+				<div class="container">
+
+					<div class="row">
+						<div class="col-lg-3  col-md-6 col-sm-6">
+							<div class="single-footer-widget">
+								<h6>About MuzMusic</h6>
+								<p>
+									At first, it was meant to be a way to represent Maziar(the author of the website!),
+									 but you know, some it wasn't enough for Maziar so a blog
+									 and members page  was implemented and now there a django website,
+									  music, firends and Maziar! 
+								</p>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-6 col-sm-6">
+							<div class="single-footer-widget">
+								<h6>Navigation Links</h6>
+								<div class="row">
+									<div class="col">
+										<ul>
+											<li><a href="{% url 'website:index' %}">Home</a></li>
+											<li><a href="{% url 'website:about' %}">About</a></li>
+											<li><a href="{% url 'website:contact' %}">Contact</a></li>
+											
+										</ul>
+									</div>
+									<div class="col">
+										<ul>
+											<li><a href="{% url 'blog:blog_home' %}">Blog</a></li>
+											<li><a href="{% url 'members' %}">Memebers</a></li>
+										</ul>
+									</div>										
+								</div>							
+							</div>
+						</div>							
+						<div class="col-lg-3  col-md-6 col-sm-6">
+						
+						</div>
+						<div class="col-lg-3  col-md-6 col-sm-6">
+					
+						</div>						
+					</div>
+
+					<div class="row footer-bottom d-flex justify-content-between align-items-center">
+						<p class="col-lg-8 col-sm-12 footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+						<!-- <div class="col-lg-4 col-sm-12 footer-social">
+							<a href="#"><i class="fa fa-facebook"></i></a>
+							<a href="#"><i class="fa fa-twitter"></i></a>
+							<a href="#"><i class="fa fa-dribbble"></i></a>
+							<a href="#"><i class="fa fa-behance"></i></a>
+						</div> -->
+					</div>
+				</div>
+			</footer>
+			<!-- End footer Area -->	
+
+			<script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
+			<script src="{% static 'js/popper.min.js' %}"></script>
+			<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>			
+			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>		
+ 			<script src="{% static 'js/jquery-ui.js' %}"></script>					
+  			<script src="{% static 'js/easing.min.js' %}"></script>			
+			<script src="{% static 'js/hoverIntent.js' %}"></script>
+			<script src="{% static 'js/superfish.min.js' %}"></script>	
+			<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+			<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>						
+			<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>					
+			<script src="{% static 'js/owl.carousel.min.js' %}"></script>							
+			<script src="{% static 'js/mail-script.js' %}"></script>	
+			<script src="{% static 'js/main.js' %}"></script>	
+		</body>
+	</html>
