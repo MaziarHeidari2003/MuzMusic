@@ -1,3 +1,11 @@
 db.sqlite3
 myvenv
 __pycache__
+
+hints1.md
+hints2.md
+
+db.sqlite3
+liara.json
+/temp/
+.log
