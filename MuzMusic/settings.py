@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'muzmusic',
         'USER':'postgres',
         'HOST':'localhost',
-        'PASSWORD':'123',
+        'PASSWORD':config('DATABASE_PASSWORD'),
         'POST':	5432
 
     }
