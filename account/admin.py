@@ -3,7 +3,6 @@ from .models import Profile
 from django.contrib.auth.models import User
 
 
-
 # #mix profile info with user info
 class ProfileInline(admin.StackedInline):
     model=Profile
