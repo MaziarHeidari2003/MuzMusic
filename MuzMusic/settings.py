@@ -84,10 +84,10 @@ WSGI_APPLICATION = 'MuzMusic.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER':'root',
-        'HOST':'muzmusicpostgres',
-        'PASSWORD':'E8W6MyYydr9vlY7fB0n8q4FP',
+        'NAME': 'muzmusic',
+        'USER':'postgres',
+        'HOST':'localhost',
+        'PASSWORD':'123',
         'POST':	5432
 
     }
