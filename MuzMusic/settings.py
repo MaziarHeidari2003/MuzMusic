@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2lev%tka1@20akw@(h2gam7o@ft&pcn9j5d$@tt-0!vj)4*6r2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG')
+DEBUG =True
 
 ALLOWED_HOSTS = []
 
@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'muzmusic',
         'USER':'postgres',
         'HOST':'localhost',
-        'PASSWORD':config('DATABASE_PASSWORD'),
+        'PASSWORD':123,
         'POST':	5432
 
     }
@@ -147,6 +147,6 @@ EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST= 'smtp.gmail.com'
 EMAIL_USE_TLS=True
 EMAIL_PORT=587
-EMAIL_HOST_USER=config('EMAIL')
-EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER=os.getenv('EMAIL')
+EMAIL_HOST_PASSWORD=os.getenv('EMAIL_HOST_PASSWORD')
 
